@@ -42,7 +42,7 @@ const stripToken = (req, res, next) => {
       return next()
     }
   } catch (error) {
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized', token: token }) // added token to the error message
+    res.status(401).send({ status: 'Error', msg: 'Unauthorized', token: token })
   }
 }
 
