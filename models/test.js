@@ -26,7 +26,19 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue("ZIP", encrypt(val));
         },
       },
-      gender: DataTypes.STRING,
+      gender: {
+        type: DataTypes.STRING,
+        get() {
+          const rawValue = this.getDataValue("gender");
+          return decrypt(rawValue);
+        },
+        set(val) {
+          this.setDataValue(
+            "gender",
+            encrypt(val)
+          )
+        }
+      },
       race: DataTypes.STRING,
       ethnicity: DataTypes.STRING,
     },
