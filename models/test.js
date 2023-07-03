@@ -10,11 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Test.belongsTo(models.User, { foreignKey: 'userId' })
+      Test.belongsTo(models.User, { foreignKey: "userId" });
     }
   }
   Test.init(
     {
+
       userId: {
         type: DataTypes.INTEGER,
         onDelete: 'CASCADE',
@@ -24,45 +25,60 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id'
         }
       },
+
       result: DataTypes.BOOLEAN,
       ZIP: {
         type: DataTypes.STRING,
         get() {
+
           const rawValue = this.getDataValue('ZIP')
           return decrypt(rawValue)
         },
         set(val) {
           this.setDataValue('ZIP', encrypt(val))
         }
+
       },
       gender: {
         type: DataTypes.STRING,
         get() {
+
           const rawValue = this.getDataValue('gender')
           return decrypt(rawValue)
         },
         set(val) {
           this.setDataValue('gender', encrypt(val))
         }
+
       },
       race: {
         type: DataTypes.STRING,
         get() {
-          const rawValue = this.getDataValue('race')
-          return decrypt(rawValue)
+
+          const rawValue = this.getDataValue("race");
+          return decrypt(rawValue);
         },
         set(val) {
-          this.setDataValue('race', encrypt(val))
-        }
+          this.setDataValue("race", encrypt(val));
+        },
       },
-
-      ethnicity: DataTypes.STRING
+      ethnicity: {
+        type: DataTypes.STRING,
+        get() {
+          const rawValue = this.getDataValue("ethnicity");
+          return decrypt(rawValue);
+        },
+        set(val) {
+          this.setDataValue("ethnicity", encrypt(val));
+        },
+      },
     },
     {
       sequelize,
-      modelName: 'Test',
-      tableName: 'tests'
+      modelName: "Test",
+      tableName: "tests",
     }
-  )
-  return Test
-}
+  );
+  return Test;
+};
+
