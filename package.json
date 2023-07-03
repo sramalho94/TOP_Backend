@@ -19,7 +19,8 @@
     "jsonwebtoken": "^9.0.0",
     "nodemon": "^2.0.22",
     "pg": "^8.11.0",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "supertest": "^6.3.3"
