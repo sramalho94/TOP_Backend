@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       DOB: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         get() {
           const rawValue = this.getDataValue('DOB')
           return decrypt(rawValue)
