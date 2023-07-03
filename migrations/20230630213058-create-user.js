@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       DOB: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       state: {
         type: Sequelize.STRING
