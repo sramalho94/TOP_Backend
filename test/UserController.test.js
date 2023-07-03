@@ -6,9 +6,9 @@ if (!process.env.APP_SECRET) {
 
 process.env.NODE_ENV = 'test'
 const request = require('supertest')
-const app = require("../server")
+const app = require('../server')
 const { createToken, hashPassword } = require('../middleware')
-const { User } = require("../models")
+const { User } = require('../models')
 
 describe('User controller test', () => {
   let testUser
@@ -18,13 +18,13 @@ describe('User controller test', () => {
     testUser = await User.create({
       username: 'testuser',
       passwordDigest: await hashPassword('testpassword'),
-      DOB: "1999-05-01",
-      state: "userstate",
-      ZIP: "userZIP",
-      firstName: "userfirstname",
-      gender: "usergender",
-      ethnicity: "userethnicity",
-      race: "userrace"
+      DOB: '1999-05-01',
+      state: 'userstate',
+      ZIP: 'userZIP',
+      firstName: 'userfirstname',
+      gender: 'usergender',
+      ethnicity: 'userethnicity',
+      race: 'userrace'
     })
 
     testToken = createToken({
@@ -52,7 +52,7 @@ describe('User controller test', () => {
     expect(response.body.user.ZIP).toBe('userZIP')
     expect(response.body.user.firstName).toBe('userfirstname')
     expect(response.body.user.gender).toBe('usergender')
-    expect(response.body.user.ethnicity).toBe('userenthnicity')
+    expect(response.body.user.ethnicity).toBe('userethnicity')
     expect(response.body.user.race).toBe('userrace')
   })
 
@@ -66,8 +66,8 @@ describe('User controller test', () => {
       })
 
     expect(response.statusCode).toBe(200)
-    expect(response.body.user.username).toBe("update username")
-    expect(response.body.user.firstName).toBe("update firstname")
+    expect(response.body.user.username).toBe('update username')
+    expect(response.body.user.firstName).toBe('update firstname')
   })
 
   test('delete user', async () => {
