@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const { verify } = require('jsonwebtoken')
 const controller = require('../controllers/TestController')
 const middleware = require('../middleware')
 
