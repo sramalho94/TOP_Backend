@@ -6,32 +6,62 @@ const Login = async (req, res) => {
     const user = await User.findOne({
       where: { username: req.body.username }
     })
-    if (
-      user &&
-      (await middleware.comparePassword(user.passwordDigest, req.body.password))
-    ) {
-      let payload = {
-        id: user.id,
-        username: user.username,
-        fullName: user.fullName
+
+    if (user) {
+      console.log('User found:', user) // Debugging purpose
+
+      const isValidPassword = await middleware.comparePassword(
+        user.passwordDigest, // stored hashed password as the first argument
+        req.body.password // plain password submitted by user as second argument
+      )
+
+      console.log('Is password valid:', isValidPassword) // Debugging purpose
+
+      if (isValidPassword) {
+        let payload = {
+          id: user.id,
+          username: user.username
+        }
+        let token = middleware.createToken(payload)
+        return res.status(200).send({ user: payload, token })
+      } else {
+        return res
+          .status(401)
+          .send({ status: 'Error', msg: 'Invalid Password' })
       }
-      let token = middleware.createToken(payload)
-      return res.status(200).send({ user: payload, token })
+    } else {
+      return res.status(404).send({ status: 'Error', msg: 'User not found' })
     }
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
   } catch (error) {
+    console.log('Error during login:', error) // Debugging purpose
     return res.status(500).json({ error: error.message })
   }
 }
 
 const Register = async (req, res) => {
   try {
-    const { username, password, fullName } = req.body
+    const {
+      password,
+      username,
+      state,
+      ZIP,
+      firstName,
+      DOB,
+      gender,
+      ethnicity,
+      race
+    } = req.body
     let passwordDigest = await middleware.hashPassword(password)
     const user = await User.create({
       username,
-      passwordDigest,
-      fullName
+      state,
+      ZIP,
+      firstName,
+      DOB,
+      gender,
+      ethnicity,
+      race,
+      passwordDigest
     })
     res.status(201).send(user)
   } catch (error) {
