@@ -1,6 +1,6 @@
-'use strict'
-const { Model } = require('sequelize')
-const { encrypt, decrypt } = require('../middleware/cryptoUtils')
+"use strict";
+const { Model } = require("sequelize");
+const { encrypt, decrypt } = require("../middleware/cryptoUtils");
 module.exports = (sequelize, DataTypes) => {
   class Test extends Model {
     /**
@@ -15,48 +15,42 @@ module.exports = (sequelize, DataTypes) => {
   }
   Test.init(
     {
-
       userId: {
         type: DataTypes.INTEGER,
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
         allowNull: true,
         references: {
-          model: 'users',
-          key: 'id'
-        }
+          model: "users",
+          key: "id",
+        },
       },
 
       result: DataTypes.BOOLEAN,
       ZIP: {
         type: DataTypes.STRING,
         get() {
-
-          const rawValue = this.getDataValue('ZIP')
-          return decrypt(rawValue)
+          const rawValue = this.getDataValue("ZIP");
+          return rawValue ? decrypt(rawValue) : rawValue;
         },
         set(val) {
-          this.setDataValue('ZIP', encrypt(val))
-        }
-
+          this.setDataValue("ZIP", encrypt(val));
+        },
       },
       gender: {
         type: DataTypes.STRING,
         get() {
-
-          const rawValue = this.getDataValue('gender')
-          return decrypt(rawValue)
+          const rawValue = this.getDataValue("gender");
+          return rawValue ? decrypt(rawValue) : rawValue;
         },
         set(val) {
-          this.setDataValue('gender', encrypt(val))
-        }
-
+          this.setDataValue("gender", encrypt(val));
+        },
       },
       race: {
         type: DataTypes.STRING,
         get() {
-
           const rawValue = this.getDataValue("race");
-          return decrypt(rawValue);
+          return rawValue ? decrypt(rawValue) : rawValue;
         },
         set(val) {
           this.setDataValue("race", encrypt(val));
@@ -66,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         get() {
           const rawValue = this.getDataValue("ethnicity");
-          return decrypt(rawValue);
+          return rawValue ? decrypt(rawValue) : rawValue;
         },
         set(val) {
           this.setDataValue("ethnicity", encrypt(val));
@@ -81,4 +75,3 @@ module.exports = (sequelize, DataTypes) => {
   );
   return Test;
 };
-
