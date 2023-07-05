@@ -55,6 +55,36 @@ describe("Test controller test", () => {
     });
   });
 
+  test("Create test", async () => {
+    const response = await request(app)
+      .post("/api/test")
+      .set("Authorization", `Bearer ${testToken}`)
+      .send({
+        result: false,
+        ZIP: "16302",
+        gender: "M",
+        ethnicity: "userethnicity",
+        race: "userrace",
+      });
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.test.result).toBe(false);
+    expect(response.body.test.ZIP).toBe("16302");
+    expect(response.body.test.gender).toBe("M");
+    expect(response.body.test.ethnicity).toBe("userethnicity");
+    expect(response.body.test.race).toBe("userrace");
+  });
+
+  test("Get all tests", async () => {
+    const response = await request(app)
+      .get("/api/test")
+      .set("Authorization", `Bearer ${testToken}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(Array.isArray(response.body.test)).toBeTruthy();
+    expect(response.body.test.length).toBeGreaterThan(0);
+  });
+
   test("get test by id", async () => {
     const response = await request(app)
       .get(`/api/test/${testTestExample.id}`)
@@ -79,8 +109,6 @@ describe("Test controller test", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body.test.result).toBe(false);
   });
-
-
 
   test("delete test", async () => {
     const response = await request(app)
