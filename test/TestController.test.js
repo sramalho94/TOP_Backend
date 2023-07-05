@@ -33,7 +33,7 @@ describe("Test controller test", () => {
 
     userId = testUser.id;
 
-    testTestExample = await User.create({
+    testTestExample = await Test.create({
       userId: userId,
       result: true,
       ZIP: "07302",
@@ -54,19 +54,48 @@ describe("Test controller test", () => {
       race: testUser.race,
     });
   });
+
   test("get test by id", async () => {
     const response = await request(app)
-      .get(`/api/test/${testUser.id}`)
+      .get(`/api/test/${testTestExample.id}`)
       .set("Authorization", `Bearer ${testToken}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.user.username).toBe("testuser");
-    expect(response.body.user.DOB).toBe("1999-05-01");
-    expect(response.body.user.state).toBe("userstate");
-    expect(response.body.user.ZIP).toBe("userZIP");
-    expect(response.body.user.firstName).toBe("userfirstname");
-    expect(response.body.user.gender).toBe("usergender");
-    expect(response.body.user.ethnicity).toBe("userethnicity");
-    expect(response.body.user.race).toBe("userrace");
+    expect(response.body.test.result).toBe(true);
+    expect(response.body.test.ZIP).toBe("07302");
+    expect(response.body.test.gender).toBe("F");
+    expect(response.body.test.ethnicity).toBe("userethnicity");
+    expect(response.body.test.race).toBe("userrace");
+  });
+
+  test("update test", async () => {
+    const response = await request(app)
+      .put(`/api/test/${testTestExample.id}`)
+      .set("Authorization", `Bearer ${testToken}`)
+      .send({
+        result: false,
+      });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.test.result).toBe(false);
+  });
+
+
+
+  test("delete test", async () => {
+    const response = await request(app)
+      .delete(`/api/test/${testTestExample.id}`)
+      .set("Authorization", `Bearer ${testToken}`);
+
+    expect(response.statusCode).toBe(204);
+  });
+
+  afterAll(async () => {
+    try {
+      await User.destroy({ truncate: { cascade: true } });
+      await Test.destroy({ truncate: { cascade: true } });
+    } catch (error) {
+      console.error("Error cleaning up test data", error);
+    }
   });
 });
