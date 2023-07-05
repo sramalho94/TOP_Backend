@@ -81,8 +81,8 @@ describe("Test controller test", () => {
       .set("Authorization", `Bearer ${testToken}`);
 
     expect(response.statusCode).toBe(200);
-    expect(Array.isArray(response.body.test)).toBeTruthy();
-    expect(response.body.test.length).toBeGreaterThan(0);
+    expect(Array.isArray(response.body.tests)).toBeTruthy();
+    expect(response.body.tests.length).toBeGreaterThan(0);
   });
 
   test("get test by id", async () => {
