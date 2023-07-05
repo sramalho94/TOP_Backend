@@ -12,7 +12,7 @@ describe('Auth controller test', () => {
 
         const response = await request(app).post('/api/auth/register').send({
             username: 'testuser',
-            passwordDigest: await hashPassword('testpassword'),
+            password: 'testpassword',
             DOB: '1999-05-01',
             state: 'userstate',
             ZIP: 'userZIP',
@@ -26,7 +26,6 @@ describe('Auth controller test', () => {
 
         expect(response.statusCode).toBe(201)
         expect(testUser.username).toBe('testuser')
-        expect(testUser.passwordDigest).toBe(testUser.passwordDigest)
         expect(testUser.id).toBe(testUser.id)
     })
 
@@ -36,12 +35,11 @@ describe('Auth controller test', () => {
             password: 'testpassword'
         })
 
-        testToken = response.body.testToken
+        testToken = response.body.token
         
         expect(response.statusCode).toBe(200)
         expect(response.body).toHaveProperty('token')
         expect(response.body.user.username).toBe('testuser')
-        expect(response.body.user.password).toBe('testpassword')
     })
 
     test('Check session test', async () => {
@@ -50,7 +48,7 @@ describe('Auth controller test', () => {
             .get('/api/auth/session')
             .set('Authorization', `Bearer ${testToken}`)
 
-        expect(response.statusCode(200))
+        expect(response.statusCode).toBe(200)
         expect(response).toHaveProperty('body')
     })
 
@@ -58,14 +56,14 @@ describe('Auth controller test', () => {
         const response = await request(app)
             .put('/api/auth/update-password')
             .set('Authorization', `Bearer ${testToken}`)
-            .set({
+            .send({
                 username: 'testuser',
                 oldPassword: 'testpassword',
                 newPassword: 'testnewpassword'
             })
 
-            expect(response.body.status).toBe('Success')
-            expect(response.body.msg).toBe('Password updated')
+        expect(response.body.status).toBe('Success')
+        expect(response.body.msg).toBe('Password updated')
     })
 
     test('Update password fail', async () => {
