@@ -22,10 +22,6 @@ jobs:
           POSTGRES_USER: ${{ secrets.DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: ${{ secrets.DB_NAME_TEST }}
-          APP_SECRET: ${{ secrets.APP_SECRET }}
-          SALT_ROUNDS: ${{ secrets.SALT_ROUNDS }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ALGORITHM: ${{ secrets.ALGORITHM }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -50,11 +46,26 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Wait for PostgreSQL to start
+        run: |
+          while ! pg_isready -h localhost -p 5432 > /dev/null 2> /dev/null; do
+            echo "Waiting for PostgreSQL to start..."
+            sleep 1
+          done
+        env:
+          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
+
       - name: Run migrations
         run: npx sequelize-cli db:migrate
+        env:
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
+          NODE_ENV: test
 
       - name: Run specific tests based on changed files
         env:
+          NODE_ENV: test
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
