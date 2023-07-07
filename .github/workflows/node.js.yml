@@ -63,7 +63,7 @@ jobs:
           DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
           NODE_ENV: test
 
-      - name: Run specific tests based on changed files
+      - name: Run tests
         env:
           NODE_ENV: test
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
@@ -74,12 +74,4 @@ jobs:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           ALGORITHM: ${{ secrets.ALGORITHM }}
         run: |
-          git diff --name-only HEAD^ HEAD | grep '^controllers/' || exit 0
-          changed_files=$(git diff --name-only HEAD^ HEAD)
-          for file in $changed_files; do
-            base_name=$(basename $file .js)
-            if [[ -f "test/${base_name}.test.js" ]]; then
-              echo "Running tests for ${base_name}"
-              npx jest "test/${base_name}.test.js"
-            fi
-          done
+          npm test
