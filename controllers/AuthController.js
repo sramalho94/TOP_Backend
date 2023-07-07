@@ -8,14 +8,14 @@ const Login = async (req, res) => {
     })
 
     if (user) {
-      console.log('User found:', user) // Debugging purpose
+      console.log('User found:', user)
 
       const isValidPassword = await middleware.comparePassword(
-        user.passwordDigest, // stored hashed password as the first argument
-        req.body.password // plain password submitted by user as second argument
+        user.passwordDigest,
+        req.body.password
       )
 
-      console.log('Is password valid:', isValidPassword) // Debugging purpose
+      console.log('Is password valid:', isValidPassword)
 
       if (isValidPassword) {
         let payload = {
@@ -33,7 +33,7 @@ const Login = async (req, res) => {
       return res.status(404).send({ status: 'Error', msg: 'User not found' })
     }
   } catch (error) {
-    console.log('Error during login:', error) // Debugging purpose
+    console.log('Error during login:', error)
     return res.status(500).json({ error: error.message })
   }
 }
