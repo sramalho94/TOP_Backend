@@ -47,6 +47,7 @@ const Register = async (req, res) => {
       ZIP,
       firstName,
       DOB,
+      email,
       gender,
       ethnicity,
       race
@@ -59,6 +60,7 @@ const Register = async (req, res) => {
       firstName,
       DOB,
       gender,
+      email,
       ethnicity,
       race,
       passwordDigest
