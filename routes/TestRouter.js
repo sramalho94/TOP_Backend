@@ -20,6 +20,10 @@ router.post(
   middleware.verifyToken,
   controller.createTest
 )
+router.post(
+  '/anon',
+  controller.createTest
+)
 router.put(
   '/:id',
   middleware.stripToken,
