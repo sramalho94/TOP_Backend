@@ -37,6 +37,8 @@
 - run `sequelize db:create`
 - run `sequelize db:migrate`
 - run `npm start` to run the application
+- sequelize db:migrate --env test // migration for test
+- npm test UserController // run test
 
 #### Testing
 
