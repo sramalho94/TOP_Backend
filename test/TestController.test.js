@@ -75,6 +75,25 @@ describe("Test controller test", () => {
     expect(response.body.test.race).toBe("userrace");
   });
 
+  test("Create test anon", async () => {
+    const response = await request(app)
+      .post("/api/test/anon")
+      .send({
+        result: false,
+        ZIP: "16302",
+        gender: "M",
+        ethnicity: "userethnicity",
+        race: "userrace",
+      });
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.test.result).toBe(false);
+    expect(response.body.test.ZIP).toBe("16302");
+    expect(response.body.test.gender).toBe("M");
+    expect(response.body.test.ethnicity).toBe("userethnicity");
+    expect(response.body.test.race).toBe("userrace");
+  });
+
   test("Get all tests", async () => {
     const response = await request(app)
       .get("/api/test")
