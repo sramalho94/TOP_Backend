@@ -52,18 +52,25 @@ const Register = async (req, res) => {
       ethnicity,
       race
     } = req.body
+
+    if (!username || !password) {
+      return res
+        .status(400)
+        .send({ status: 'Error', msg: 'Username or password missing' })
+    }
+
     let passwordDigest = await middleware.hashPassword(password)
     const user = await User.create({
       username,
-      state,
-      ZIP,
-      firstName,
-      DOB,
-      gender,
-      email,
-      ethnicity,
-      race,
-      passwordDigest
+      passwordDigest,
+      state: state,
+      ZIP: ZIP,
+      firstName: firstName || null,
+      DOB: DOB,
+      gender: gender || null,
+      email: email,
+      ethnicity: ethnicity || null,
+      race: race || null
     })
     res.status(201).send(user)
   } catch (error) {
