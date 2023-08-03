@@ -72,7 +72,15 @@ const Register = async (req, res) => {
       ethnicity: ethnicity || null,
       race: race || null
     })
-    res.status(201).send(user)
+    // Create token after registering the user
+    let payload = {
+      id: user.id,
+      username: user.username
+    }
+    let token = middleware.createToken(payload)
+
+    // Send both user data and the token in the response
+    res.status(201).send({ user, token })
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
