@@ -25,8 +25,8 @@ describe('Auth controller test', () => {
     testUser = response.body
 
     expect(response.statusCode).toBe(201)
-    expect(testUser.username).toBe('testuser')
-    expect(testUser.id).toBe(testUser.id)
+    expect(testUser.user.username).toBe('testuser')
+    expect(testUser.user.id).toBeDefined()
   })
 
   test('Login user', async () => {
