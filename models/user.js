@@ -42,17 +42,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         allowNull: false
       },
-      state: {
-        type: DataTypes.STRING,
-        get() {
-          const rawValue = this.getDataValue('state')
-          return rawValue ? decrypt(rawValue) : rawValue
-        },
-        set(val) {
-          this.setDataValue('state', val ? encrypt(val) : null)
-        },
-        allowNull: false
-      },
       ZIP: {
         type: DataTypes.STRING,
         get() {
