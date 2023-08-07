@@ -13,7 +13,6 @@ describe('Auth controller test', () => {
       username: 'testuser',
       password: 'testpassword',
       DOB: '1999-05-01',
-      state: 'userstate',
       ZIP: 'userZIP',
       firstName: 'userfirstname',
       gender: 'usergender',
