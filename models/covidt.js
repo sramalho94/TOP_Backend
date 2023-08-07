@@ -56,15 +56,16 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue('race', val ? encrypt(val) : null)
         }
       },
-      state: {
+      DOB: {
         type: DataTypes.STRING,
         get() {
-          const rawValue = this.getDataValue('state')
+          const rawValue = this.getDataValue('DOB')
           return rawValue ? decrypt(rawValue) : rawValue
         },
         set(val) {
-          this.setDataValue('state', val ? encrypt(val) : null)
-        }
+          this.setDataValue('DOB', val ? encrypt(val) : null)
+        },
+        allowNull: false
       },
       ethnicity: {
         type: DataTypes.STRING,
