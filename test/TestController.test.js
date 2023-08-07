@@ -23,7 +23,6 @@ describe('Test controller test', () => {
       username: 'testuser',
       passwordDigest: await hashPassword('testpassword'),
       DOB: '1999-05-01',
-      state: 'userstate',
       ZIP: 'userZIP',
       firstName: 'userfirstname',
       email: 'test@email.com',
@@ -33,10 +32,12 @@ describe('Test controller test', () => {
     })
 
     userId = testUser.id
-
+    userDOB = testUser.DOB
     testTestExample = await Test.create({
       userId: userId,
       result: true,
+      DOT: '07/08/2023',
+      DOB: userDOB,
       ZIP: '07302',
       gender: 'F',
       ethnicity: 'userethnicity',
@@ -47,7 +48,6 @@ describe('Test controller test', () => {
       id: testUser.id,
       username: testUser.username,
       DOB: testUser.DOB,
-      state: testUser.state,
       ZIP: testUser.ZIP,
       firstName: testUser.firstName,
       gender: testUser.gender,
@@ -65,7 +65,9 @@ describe('Test controller test', () => {
         ZIP: '16302',
         gender: 'M',
         ethnicity: 'userethnicity',
-        race: 'userrace'
+        race: 'userrace',
+        DOT: '07/07/2023',
+        DOB: userDOB
       })
 
     expect(response.statusCode).toBe(201)
@@ -82,7 +84,9 @@ describe('Test controller test', () => {
       ZIP: '16302',
       gender: 'M',
       ethnicity: 'userethnicity',
-      race: 'userrace'
+      race: 'userrace',
+      DOT: '07/07/2023',
+      DOB: '11/11/2000'
     })
 
     expect(response.statusCode).toBe(201)

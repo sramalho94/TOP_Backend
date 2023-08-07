@@ -43,7 +43,6 @@ const Register = async (req, res) => {
     const {
       password,
       username,
-      state,
       ZIP,
       firstName,
       DOB,
@@ -63,7 +62,6 @@ const Register = async (req, res) => {
     const user = await User.create({
       username,
       passwordDigest,
-      state: state,
       ZIP: ZIP,
       firstName: firstName || null,
       DOB: DOB,
