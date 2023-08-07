@@ -67,6 +67,17 @@ module.exports = (sequelize, DataTypes) => {
         },
         allowNull: false
       },
+      DOT: {
+        type: DataTypes.STRING,
+        get() {
+          const rawValue = this.getDataValue('DOT')
+          return rawValue ? decrypt(rawValue) : rawValue
+        },
+        set(val) {
+          this.setDataValue('DOT', val ? encrypt(val) : null)
+        },
+        allowNull: false
+      },
       ethnicity: {
         type: DataTypes.STRING,
         get() {
