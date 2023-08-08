@@ -20,7 +20,8 @@ const Login = async (req, res) => {
       if (isValidPassword) {
         let payload = {
           id: user.id,
-          username: user.username
+          username: user.username,
+          DOB: user.DOB
         }
         let token = middleware.createToken(payload)
         return res.status(200).send({ user: payload, token })
