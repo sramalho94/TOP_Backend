@@ -1,8 +1,4 @@
 require('dotenv').config({ path: '.env.local' })
-const fs = require('fs')
-const path = require('path')
-
-const rdsCa = fs.readFileSync(path.join(__dirname, 'rds-ca-2019-root.pem'))
 
 module.exports = {
   development: {
@@ -31,8 +27,7 @@ module.exports = {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: true,
-        ca: [rdsCa]
+        rejectUnauthorized: true
       }
     }
   }
