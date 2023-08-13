@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config({ path: '.env.local' })
 const app = require('./server')
 const { execSync } = require('child_process')
 const PORT = process.env.PORT || 3001
